@@ -1,3 +1,5 @@
+import { timeStamp } from "console"
+
 const colors : Array<string> = [
     "#F44336",
     "#3F51B5",
@@ -84,5 +86,36 @@ class Animator {
             this.animated = false 
             clearInterval(this.interval)
         }
+    }
+}
+
+class Stage {
+
+    canvas : HTMLCanvasElement = document.createElement('canvas')
+    context : CanvasRenderingContext2D 
+
+    initCanvas() {
+        this.canvas.width = w 
+        this.canvas.height = h 
+        document.body.appendChild(this.canvas)
+        this.context = this.canvas.getContext('2d')
+    }
+
+    render() {
+        this.context.fillStyle = backColor 
+        this.context.fillRect(0, 0, w, h)
+    }
+
+    handleTap() {
+        this.canvas.onmousedown = () => {
+
+        }
+    }
+
+    static init() {
+        const stage : Stage = new Stage()
+        stage.initCanvas()
+        stage.render()
+        stage.handleTap()
     }
 }
