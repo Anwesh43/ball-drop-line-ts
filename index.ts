@@ -143,3 +143,24 @@ class State {
         }
     }
 }
+
+class BDLNode {
+
+    state : State 
+
+    constructor(private i : number, private x: number, private y : number) {
+        this.state = new State()
+    }
+
+    draw(context : CanvasRenderingContext2D) {
+        DrawingUtil.drawBDLNode(context, this.i, this.x, this.y, this.state.scale)
+    }
+
+    update(cb : Function) {
+        this.state.update(cb)
+    }
+
+    startUpdating(cb : Function) {
+        this.state.startUpdating(cb)
+    }
+}
