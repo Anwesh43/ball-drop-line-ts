@@ -1,5 +1,3 @@
-import { timeStamp } from "console"
-
 const colors : Array<string> = [
     "#F44336",
     "#3F51B5",
@@ -93,6 +91,7 @@ class Stage {
 
     canvas : HTMLCanvasElement = document.createElement('canvas')
     context : CanvasRenderingContext2D 
+    renderer : Renderer = new Renderer()
 
     initCanvas() {
         this.canvas.width = w 
@@ -104,11 +103,14 @@ class Stage {
     render() {
         this.context.fillStyle = backColor 
         this.context.fillRect(0, 0, w, h)
+        this.renderer.render(this.context)
     }
 
     handleTap() {
-        this.canvas.onmousedown = () => {
-
+        this.canvas.onmousedown = (e : MouseEvent) => {
+            this.renderer.handleTap(e.offsetX, e.offsetY, () => {
+                this.render()
+            })
         }
     }
 
