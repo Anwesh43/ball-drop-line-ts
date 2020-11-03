@@ -164,3 +164,36 @@ class BDLNode {
         this.state.startUpdating(cb)
     }
 }
+
+class BallDropLine {
+
+    bdls : Array<BDLNode> = []
+    i : number = 0 
+    draw(context : CanvasRenderingContext2D) {
+        this.bdls.forEach(bdl => {
+            bdl.draw(context)
+        })
+    }
+
+    startUpdating(x : number, y : number, cb  : Function) {
+        const bdlNode = new BDLNode(this.i, x, y)
+        this.bdls.push(bdlNode)
+        if (this.bdls.length == 1) {
+            bdlNode.startUpdating(() => {
+                cb()
+            })
+        }
+        this.i++
+    }
+
+    update(cb : Function) {
+        this.bdls.forEach(bdl => {
+            bdl.update(() => {
+                this.bdls.splice(0, 1)
+                if (this.bdls.length == 0) {
+                    cb()
+                }
+            })
+        })
+    }
+}
