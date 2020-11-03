@@ -155,7 +155,7 @@ class BDLNode {
     }
 
     draw(context : CanvasRenderingContext2D) {
-        DrawingUtil.drawBDLNode(context, this.i, this.x, this.y, this.state.scale)
+        DrawingUtil.drawBDLNode(context, this.x, this.y, this.i, this.state.scale)
     }
 
     update(cb : Function) {
@@ -180,11 +180,11 @@ class BallDropLineContainer {
     startUpdating(x : number, y : number, cb  : Function) {
         const bdlNode = new BDLNode(this.i, x, y)
         this.bdls.push(bdlNode)
-        if (this.bdls.length == 1) {
-            bdlNode.startUpdating(() => {
+        bdlNode.startUpdating(() => {
+            if (this.bdls.length == 1) {
                 cb()
-            })
-        }
+            }
+        })
         this.i++
     }
 
