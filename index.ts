@@ -165,7 +165,7 @@ class BDLNode {
     }
 }
 
-class BallDropLine {
+class BallDropLineContainer {
 
     bdls : Array<BDLNode> = []
     i : number = 0 
@@ -193,6 +193,28 @@ class BallDropLine {
                 if (this.bdls.length == 0) {
                     cb()
                 }
+            })
+        })
+    }
+}
+
+class Renderer {
+
+    ballDropLineContainer : BallDropLineContainer = new BallDropLineContainer()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.ballDropLineContainer.draw(context)
+    }
+
+    handleTap(x : number, y : number, renderFn : Function) {
+        this.ballDropLineContainer.startUpdating(x, y, () => {
+            this.animator.start(() => {
+                renderFn()
+                this.ballDropLineContainer.update(() => {
+                    this.animator.stop()
+                    renderFn()
+                })
             })
         })
     }
